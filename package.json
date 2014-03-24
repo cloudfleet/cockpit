@@ -1,0 +1,26 @@
+{
+  "name": "cockpit",
+  "version": "0.0.1",
+  "description": "The cockpit of a cloudfleet instance",
+  "main": "cockpit.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cloudfleet/cockpit.git"
+  },
+  "author": "Christoph Witzany <christoph@cloudfleet.io> (cloudfleet.io)",
+  "license": "AGPL",
+  "bugs": {
+    "url": "https://github.com/cloudfleet/cockpit/issues"
+  },
+  "homepage": "https://github.com/cloudfleet/cockpit",
+  "dependencies": {
+    "musterroll-api": "git://github.com/cloudfleet/musterroll-api.git",
+    "musterroll-ldap": "git://github.com/cloudfleet/musterroll-ldap.git",
+    "musterroll-userstore-json": "git://github.com/cloudfleet/musterroll-userstore-json.git",
+    "scrypt": "^3.0.1",
+    "express": "^3.5.0"
+  }
+}
