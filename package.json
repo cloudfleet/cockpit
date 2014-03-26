@@ -21,6 +21,7 @@
     "musterroll-ldap": "git://github.com/cloudfleet/musterroll-ldap.git",
     "musterroll-userstore-json": "git://github.com/cloudfleet/musterroll-userstore-json.git",
     "scrypt": "^3.0.1",
-    "express": "^3.5.0"
+    "express": "^3.5.0",
+    "request": "^2.34.0"
   }
 }
