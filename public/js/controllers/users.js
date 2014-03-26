@@ -7,7 +7,10 @@ app.run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
 
-angular.module('cockpit').controller('CockpitCtrl', function ($scope, $http) {
+angular.module('cockpit').controller('CockpitCtrl', function ($scope, $http, $resource) {
+
+    var usersCollection = $resource("/api/v1/users/");
+    var usersResource = $resource("/api/v1/users/:id", {id: '@id'});
 
     $scope.isAdmin = true;
 
@@ -19,7 +22,38 @@ angular.module('cockpit').controller('CockpitCtrl', function ($scope, $http) {
             console.log(data);
         });
     };
+    $scope.refreshUsers = function() {
+        $scope.users = usersCollection.query(function(){});
+    };
+
+    $scope.saveUser = function(data, user) {
+        //$scope.user not updated yet
+        angular.extend(user, data);
+        return usersResource.save(user);
+    };
+
+
     $scope.refreshCurrentUser();
+    $scope.refreshUsers();
+
+});
+
+angular.module('cockpit').controller('UserCtrl', function ($scope) {
+
+    $scope.newUserId = "";
+
+    $scope.addUser = function() {
+        var newUser = {id:$scope.newUserId, firstName:"", lastName:"", isAdmin: false};
+        usersResource.save(newUser);
+        $scope.users.push(newUser);
+        $scope.newUserId = "";
+    };
+
+
+});
+
+angular.module('cockpit').controller('LoginCtrl', function ($scope, $http, $resource) {
+
 
     $scope.login = function(){
         $http({
@@ -33,30 +67,9 @@ angular.module('cockpit').controller('CockpitCtrl', function ($scope, $http) {
         }).success(function ()
             {
                 $scope.refreshCurrentUser();
+                $scope.refreshUsers();
             });
     };
 
-});
-
-angular.module('cockpit').controller('UserCtrl', function ($scope, $http, $resource) {
-    var usersCollection = $resource("/api/v1/users/");
-    var usersResource = $resource("/api/v1/users/:id", {id: '@id'});
-
-    $scope.users = usersCollection.query(function(){});
-    $scope.newUserId = "";
-
-    $scope.addUser = function() {
-        var newUser = {id:$scope.newUserId, firstName:"", lastName:"", isAdmin: false};
-        usersResource.save(newUser);
-        $scope.users.push(newUser);
-        $scope.newUserId = "";
-    };
-
-    $scope.saveUser = function(data, user) {
-        //$scope.user not updated yet
-        angular.extend(user, data);
-        return usersResource.save(user);
-    };
 
 });
-
