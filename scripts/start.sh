@@ -13,7 +13,7 @@ else
     echo $backend_config > /etc/pagekite.d/20_backend.rc
 fi
 
-cd cockpit
+cd $HOME/cockpit
 
 # start pagekite backend daemon
 sudo service pagekite start
