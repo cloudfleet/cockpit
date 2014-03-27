@@ -21,7 +21,10 @@
 
     <div class="row" ng-controller="LoginCtrl" ng-hide="currentUser.isAdmin">
         <div class="col-lg-6">
-            <form class="form-inline">
+            <div ng-show="login_error" class="alert alert-danger alert-dismissable">
+                Wrong username or password. Please try again!
+            </div>
+            <form class="form-inline" id="login-form">
                 <div>
                     <input type="text" class="form-control" ng-model="username" placeholder="username">
                 </div>

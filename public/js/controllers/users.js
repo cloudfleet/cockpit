@@ -54,6 +54,7 @@ angular.module('cockpit').controller('UserCtrl', function ($scope) {
 
 angular.module('cockpit').controller('LoginCtrl', function ($scope, $http, $resource) {
 
+    $scope.login_error = false;
 
     $scope.login = function(){
         $http({
@@ -66,8 +67,16 @@ angular.module('cockpit').controller('LoginCtrl', function ($scope, $http, $reso
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function ()
             {
+                $scope.login_error = false;
                 $scope.refreshCurrentUser();
                 $scope.refreshUsers();
+            }
+        ).error(function()
+            {
+                $scope.login_error = true;
+                $scope.refreshCurrentUser();
+                $scope.username = "";
+                $scope.password = "";
             });
     };
 
