@@ -19,4 +19,4 @@ cd cockpit
 sudo service pagekite start
 
 # the app
-node cockpit.js
+authbind node cockpit.js
