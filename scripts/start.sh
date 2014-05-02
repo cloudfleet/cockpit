@@ -23,13 +23,19 @@ else
     # httpd
     httpd_rc="service_on = http:@kitename : localhost:3000 : @kitesecret"
     echo $httpd_rc > /etc/pagekite.d/80_httpd.rc
+
+    cd $HOME/cockpit
+
+    # start pagekite backend daemon
+    #sudo service pagekite start
+    sudo invoke-rc.d pagekite restart
+
+    # the app
+    nohup authbind node cockpit.js --domain=${domain} \
+    --secret=${secret} --auth-url=https://spire.cloudfleet.io/auth/ \
+    --user-storage-path=/var/lib/cockpit > /var/log/cockpit/cockpit.log 2>&1 &
+
 fi
 
-cd $HOME/cockpit
 
-# start pagekite backend daemon
-#sudo service pagekite start
-sudo invoke-rc.d pagekite restart
-
-# the app
-authbind node cockpit.js
+/bin/bash

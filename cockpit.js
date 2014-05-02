@@ -1,14 +1,26 @@
 var user_store_json = require('musterroll-userstore-json');
 var musterroll_ldap = require('musterroll-ldap');
 var musterroll_api = require('musterroll-api');
+var fs = require('fs');
 var express = require('express');
 var http = require('http');
 var request = require('request');
+var argv = require('minimist')(process.argv.slice(2));
 
-var userStore = user_store_json.createUserStore({});
+var userStoragePath = argv["user-storage-path"] || null;
 
-var ldapServer = musterroll_ldap.createServer({userStore: userStore});
-ldapServer.listen(1389, function() {
+var userStore = user_store_json.createUserStore({config_file_location: userStoragePath});
+
+var ldapServer = musterroll_ldap.createServer(
+    {
+        userStore: userStore,
+        rootDN: argv["domain"].split(".").map(function(part){return "dc=" + part;}).join(", ")
+    }
+);
+
+
+
+ldapServer.listen(389, function() {
     console.log('LDAP server listening at ' + ldapServer.url);
 });
 
@@ -28,11 +40,12 @@ var webServer = musterroll_api.createServer({
         var failure = error_callback;
 
         request.post(
-            "https://cloudfleet.herokuapp.com/auth/",
+            argv["auth-url"],
             {
                 form: {
                     username: username,
-                    password: password
+                    password: password,
+                    secret: argv["secret"]
                 }
             },
             function(err, resp, body) {
