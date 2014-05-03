@@ -11,18 +11,24 @@ var userStoragePath = argv["user-storage-path"] || null;
 
 var userStore = user_store_json.createUserStore({config_file_location: userStoragePath});
 
+var domain = argv["domain"] || "example.com";
 var ldapServer = musterroll_ldap.createServer(
     {
         userStore: userStore,
-        rootDN: argv["domain"].split(".").map(function(part){return "dc=" + part;}).join(", ")
+        rootDN: domain.split(".").map(function(part){return "dc=" + part;}).join(", ")
     }
 );
 
 
-
-ldapServer.listen(389, function() {
-    console.log('LDAP server listening at ' + ldapServer.url);
-});
+try{
+    ldapServer.listen(1389, function() {
+        console.log('LDAP server listening at ' + ldapServer.url);
+    });
+}
+catch(error)
+{
+    console.log(error);
+}
 
 var webServer = musterroll_api.createServer({
     userStore: userStore,
@@ -40,7 +46,7 @@ var webServer = musterroll_api.createServer({
         var failure = error_callback;
 
         request.post(
-            argv["auth-url"],
+            argv["auth-url"] || "https://cloudfleet.herokuapp.com/auth/",
             {
                 form: {
                     username: username,
@@ -49,7 +55,7 @@ var webServer = musterroll_api.createServer({
                 }
             },
             function(err, resp, body) {
-                console.log(body);
+                console.log("Authentication Response: " + body);
                 if(!err && JSON.parse(body).authenticated)
                 {
                     success();
@@ -57,7 +63,7 @@ var webServer = musterroll_api.createServer({
                 else
                 {
 
-                    console.log(JSON.stringify(err));
+                    console.log(JSON.stringify("Authentication error: " + err));
                     failure();
                 }
             }

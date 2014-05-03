@@ -19,6 +19,7 @@ angular.module('cockpit').controller('CockpitCtrl', function ($scope, $http, $re
         "use strict";
         $http.get("/api/v1/currentUser").success(function(data){
             $scope.currentUser = data;
+            $scope.addresser = data.firstName || data.id
             console.log(data);
         });
     };

@@ -5,21 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cloud|fleet - Cockpit</title>
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="duralumin/styles/main.css">
     <link rel="stylesheet" href="css/xeditable.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/font-awesome.css" >
     <script src="js/modernizr.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="duralumin/bower_components/jquery/jquery.js"></script>
+    <script src="duralumin/scripts/main.js"></script>
+    <script src="duralumin/scripts/plugins.js"></script>
     <script src="js/angular.js"></script>
     <script src="js/angular-resource.js"></script>
     <script src="js/xeditable.js"></script>
     <script src="js/controllers/users.js"></script>
 </head>
 <body ng-controller="CockpitCtrl">
+    <header>
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="active">
+                <a href="#">Manage Users</a>
+            </li>
+        </ul>
+        <h3 class="text-muted"><a href="/">CLOUD<span>FLEET</span></a></h3>
+    </header>
 
-    <div class="row" ng-controller="LoginCtrl" ng-hide="currentUser.isAdmin">
+  <div class="row" ng-controller="LoginCtrl" ng-hide="currentUser.isAdmin">
         <div class="col-lg-6">
             <div ng-show="login_error" class="alert alert-danger alert-dismissable">
                 Wrong username or password. Please try again!
@@ -37,7 +49,7 @@
     </div>
     <div class="row" ng-controller="UserCtrl" ng-show="currentUser.isAdmin">
         <div class="col-lg-2">
-            <h1>Hello {{currentUser.firstName}}!</h1>
+            <h1>Hello {{addresser}}!</h1>
         </div>
         <div class="clearfix"></div>
         <div class="col-lg-6">
