@@ -7,6 +7,7 @@ sudo apt-get update
 sudo apt-get install -y python-software-properties python g++ make pagekite
 sudo apt-get install -y owncloud
 sudo apt-get install -y authbind
+sudo apt-get install -y git
 sudo mkdir /etc/cockpit
 sudo mkdir /var/log/cockpit
 sudo touch /etc/authbind/byport/389
@@ -15,3 +16,6 @@ sudo chmod 755 /etc/authbind/byport/389
 
 
 npm install
+git clone https://github.com/cloudfleet/duralumin.git public/duralumin
+cd public/duralumin
+git checkout production
