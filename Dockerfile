@@ -13,3 +13,4 @@ RUN cd $HOME/cockpit/; scripts/install.sh
 CMD $HOME/cockpit/scripts/start.sh
 
 EXPOSE 3000
+EXPOSE 80
