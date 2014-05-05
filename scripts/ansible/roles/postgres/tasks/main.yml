@@ -1,0 +1,22 @@
+---
+- name: install postgres
+  apt: pkg={{ item }}
+  with_items:
+  - postgresql
+  - python-psycopg2
+
+
+- name: restart postgres
+  service: name=postgresql pattern=/etc/init.d/postgresql state=restarted enabled=yes
+
+- name: Ensure database exists
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{ dbname }}
+
+- name: Ensure DB user has access to the DB
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: db={{ dbname }} name={{ dbuser }} password={{ dbpassword }} priv=ALL state=present
+  postgresql_user: name={{ dbuser }} role_attr_flags=NOSUPERUSER
+

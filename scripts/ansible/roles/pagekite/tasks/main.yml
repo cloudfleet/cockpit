@@ -1,0 +1,9 @@
+---
+- name: install pagekite
+  apt: pkg={{ item }} state=present
+  with_items:
+    - python-software-properties
+    - python
+    - g++
+    - make
+    - pagekite

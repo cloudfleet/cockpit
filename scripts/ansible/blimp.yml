@@ -1,0 +1,8 @@
+- hosts: all
+
+  roles:
+    - pagekite
+    - apache
+    - postgres
+    - owncloud
+    - cockpit

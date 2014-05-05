@@ -1,7 +1,12 @@
 #!/bin/bash
 
+
 usage="start.sh <domain> <secret> [frontend]\n\
 e.g. start.sh test.blimpyard.cloudfleet.io supersecret blimpyard.cloudfleet.io:1234"
+
+
+service postgresql restart
+service apache2 restart
 
 if [ $# -lt 2 ]; then
     echo "No parameter passed, not starting pagekite. Usage:";

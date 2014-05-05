@@ -1,0 +1,4 @@
+---
+- name: install owncloud
+  sudo: yes
+  apt: pkg=owncloud state=present
