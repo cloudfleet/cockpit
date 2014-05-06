@@ -12,11 +12,22 @@
 - name: Ensure database exists
   sudo: yes
   sudo_user: postgres
-  postgresql_db: name={{ dbname }}
+  postgresql_db: name=blimp_oc
 
 - name: Ensure DB user has access to the DB
   sudo: yes
   sudo_user: postgres
-  postgresql_user: db={{ dbname }} name={{ dbuser }} password={{ dbpassword }} priv=ALL state=present
-  postgresql_user: name={{ dbuser }} role_attr_flags=NOSUPERUSER
+  postgresql_user: name={{ dbuser }} state=present
+
+
+- name: Set db owner
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c "ALTER DATABASE blimp_oc OWNER TO blimp;"
+
+
+- name: Set user password
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c "ALTER USER blimp with  password 'blimppw';"
 

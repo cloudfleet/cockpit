@@ -1,4 +1,21 @@
 ---
 - name: install owncloud
+  apt: pkg={{ item }} state=present
+  with_items:
+  - owncloud
+  - php5-ldap
+
+- name: copy installation file
+  copy: src=owncloud.config.php dest=/var/www/owncloud/config/config.php
+
+- name: set owner of installation file
+  file: path=/var/www/owncloud/config/config.php owner=www-data
+
+- name: copy database file
+  copy: src=blimp_oc.sql dest=/tmp/blimp_oc.sql
+
+- name: restoring database
   sudo: yes
-  apt: pkg=owncloud state=present
+  sudo_user: postgres
+  command: psql -d blimp_oc -f /tmp/blimp_oc.sql
+
