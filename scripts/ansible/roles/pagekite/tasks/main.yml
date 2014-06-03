@@ -1,4 +1,10 @@
 ---
+- name: setup pagekite repository
+  command: echo 'deb http://pagekite.net/pk/deb/ pagekite main' > /etc/apt/sources.list.d/pagekite.list
+
+- name: get repository key for pagekite
+  command: apt-key adv --recv-keys --keyserver keys.gnupg.net AED248B1C7B2CAC3
+
 - name: install pagekite
   apt: pkg={{ item }} state=present
   with_items:

@@ -35,9 +35,6 @@ else
     sudo service pagekite restart
     #sudo invoke-rc.d pagekite restart
 
-    #TODO: move to ansible install script
-    mkdir -p /var/log/cockpit/
-
     # the app
     nohup authbind node cockpit.js --domain=${domain} \
     --secret=${secret} --auth-url=https://spire.cloudfleet.io/auth/ \

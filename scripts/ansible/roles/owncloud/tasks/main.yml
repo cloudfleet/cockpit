@@ -1,4 +1,11 @@
 ---
+- name: setup owncloud repository
+  command: echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04/ /' > /etc/apt/sources.list.d/owncloud.list
+
+- name: get repository key for owncloud
+  command: wget -q -O - http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.04/Release.key | apt-key add -
+
+
 - name: install owncloud
   apt: pkg={{ item }} state=present
   with_items:

@@ -4,8 +4,12 @@
   with_items:
     - authbind
     - git
+    - bower
 
 - name: setup files
   file: path=/etc/cockpit state=directory
   file: path=/var/log/cockpit state=directory
   file: path=/etc/authbind/byport/389 state=touch mode=0755
+
+- name: install npm packages
+  npm: path=.
