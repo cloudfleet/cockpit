@@ -1,13 +1,14 @@
 ---
 - name: setup owncloud repository
-  command: echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04/ /' > /etc/apt/sources.list.d/owncloud.list
+  apt_repository: repo='deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04/ /' state=present
 
 - name: get repository key for owncloud
-  command: wget -q -O - http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.04/Release.key | apt-key add -
+  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.04/Release.key
+
 
 
 - name: install owncloud
-  apt: pkg={{ item }} state=present
+  apt: pkg={{ item }} state=present  update_cache=yes
   with_items:
   - owncloud
   - php5-ldap
