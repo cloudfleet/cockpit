@@ -1,7 +1,7 @@
 /**
  * Created by doublemalt on 12/3/13.
  */
-var app = angular.module('cockpit', ['ngResource', 'xeditable']);
+var app = angular.module('cockpit', ['ngRoute', 'ngResource', 'xeditable']);
 
 app.run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
@@ -52,6 +52,29 @@ angular.module('cockpit').controller('UserCtrl', function ($scope) {
 
 
 });
+
+angular.module('cockpit').config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/users', {
+        templateUrl:'templates/users.tpl.html',
+        controller:'UserCtrl'
+    });
+}]);
+
+
+angular.module('cockpit').controller('DashboardCtrl', function ($scope) {
+
+
+
+});
+
+angular.module('cockpit').config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/', {
+        templateUrl:'templates/dashboard.tpl.html',
+        controller:'DashboardCtrl'
+    });
+}]);
+
+
 
 angular.module('cockpit').controller('LoginCtrl', function ($scope, $http, $resource) {
 
